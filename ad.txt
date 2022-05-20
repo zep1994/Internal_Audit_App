@@ -1,0 +1,27 @@
+Get AD users list from PowerShell
+get-aduser -Filter 'employeenumber -like "*"' -properties name,EmailAddress, EmployeeNumber,company,Created,LastLogonDate,City,Office,StreetAddress,State,Enabled | select name,EmailAddress,EmployeeNumber,company,Created,LastLogonDate,City,Office,StreetAddress,State,Enabled | Export-Csv C:\Users\tmatlock\Documents\UsersAndAddresses.csv -notypeinformation
+#To pull from another trusted domain, user the -server command with an IP of a DC in the other domain
+#Get-ADUser -server IPADDRESS -Filter 'employeenumber -like "*"' -Properties name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | select name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | Export-Csv ADExportForEC_OTHERDOMAIN.csv -force -notypeinformation
+
+#Resinall Hattiesburg
+Get-ADUser -server  -Filter 'employeenumber -like "*"' -Properties name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | select name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | Export-Csv ADExportForEC_Hattiesburg.csv -force -notypeinformation
+
+#Resinall Severn
+Get-ADUser -server  -Filter 'employeenumber -like "*"' -Properties name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | select name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | Export-Csv ADExportForEC_Severn.csv -force -notypeinformation
+
+
+Run on remote terminal
+#Crafco
+Get-ADUser -server  -Filter 'employeenumber -like "*"' -Properties name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | select name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled | Export-Csv ADExportForEC_Crafco.csv -force -notypeinformation
+
+So the command is: Get-ADUser -server IPADDRESS
+so like for resinall hattiesburg: Get-ADUser -server  -filter {(Enabled -eq $True)} -properties name,EmailAddress,company,Created,LastLogonDate,City,Office,StreetAddress,State | select name,EmailAddress,company,Created,LastLogonDate,City,Office,StreetAddress,State | Export-Csv HBurgUsersAndAddresses.csv -notypeinformation
+severn: Get-ADUser -server 
+crafco: Get-ADUser -server 1
+just have to add the -server command in to tell it to ask a specific DC
+
+Crafco
+
+ 
+get-aduser -Filter 'employeenumber -like "*"' -Properties name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled,Created | select name,EmployeeNumber,telephoneNumber,EmailAddress,Enabled,Created |  Export-Csv C:\Users\tmatlock\Documents\SystemAccessAudit\UsersAndAddresses_ML.csv -notypeinformation
+
