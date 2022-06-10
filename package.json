@@ -1,0 +1,24 @@
+{
+  "name": "it-internal-audit-applications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zep1994/Internal_Audit_App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zep1994/Internal_Audit_App/issues"
+  },
+  "homepage": "https://github.com/zep1994/Internal_Audit_App#readme",
+  "dependencies": {
+    "msnodesqlv8": "^2.4.8",
+    "mssql": "^8.1.2",
+    "tedious": "^14.5.0"
+  }
+}
