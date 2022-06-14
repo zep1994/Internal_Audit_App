@@ -1,0 +1,71 @@
+// The constructor of Dropzone accepts two arguments:
+//
+// 1. The selector for the HTML element that you want to add
+//    Dropzone to, the second
+// 2. An (optional) object with the configuration
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Upload Example</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+</head>
+<form id="upload-widget" method="post" action="/upload" class="dropzone">
+    <div class="fallback">
+        <input name="file" type="file" />
+    </div>
+</form>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script type="text/javascript">
+            Dropzone.options.uploadWidget = {
+            paramName: 'file',
+            maxFilesize: 5, // MB
+            maxFiles: 5,
+            dictDefaultMessage: 'Drag File To Upload',
+                init: function() {
+                    this.on('success', function(file, resp){
+                    console.log(file);
+                    console.log(resp);
+                    });
+                }
+            };
+    </script>
+</body>
+</html>
+
+
+<!-- <script>
+    let myDropzone = new Dropzone("div#myId", { url: "/target"});
+    Dropzone.options.myGreatDropzone = { // camelized version of the `id`
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2, // MB
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
+            }
+        };
+</script> -->
+
+
+<!-- this.on('thumbnail', function(file) {
+    if (file.accepted !== false) {
+        if (file.width < 640 || file.height < 480) {
+        file.rejectDimensions();
+        } else {
+        file.acceptDimensions();
+        }
+    }
+    });
+},
+accept: function(file, done) {
+    file.acceptDimensions = done;
+    file.rejectDimensions = function() {
+    done('The image must be at least 640 x 480px');
+    }; -->
