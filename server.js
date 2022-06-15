@@ -18,8 +18,8 @@ app.set('views', 'views')
 const HomeRoutes = require('./routes/home')
 
 // Use Static Files to serve images and css
-app.use(express.static(path.join(__dirname, 'public')))
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+app.use(express.static(path.join(__dirname, 'public/')))
+app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')))
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -27,7 +27,7 @@ const multerStorage = multer.diskStorage({
         },
         filename: (req, file, cb) => {
         const ext = file.mimetype.split("/")[1];
-        cb(null, `uploads/${file.originalname}.${ext}`);
+        cb(null, `uploads/${file.originalname}`);
         },
     });
 
@@ -53,8 +53,8 @@ app.post('/public/uploads', upload.single('file'), async (req, res, next) => {
    
 })
 
-app.get('/upload/:filename',(req,res) => {
-    res.sendFile(__dirname,"../uploads/"+req.query.filename);
+app.get('/public/uploads/:filename',(req,res) => {
+    res.sendFile(__dirname,"/public/uploads/"+req.query.filename);
 })
 
 

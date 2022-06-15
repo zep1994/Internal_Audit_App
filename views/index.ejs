@@ -20,24 +20,26 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+   
             Dropzone.options.uploadWidget = {
                 url: '/public/uploads',
-                paramName: 'file',
                 acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
                 dictDefaultMessage: 'Drag File To Upload',
                 addRemoveLinks: true,
                     init: function() {
                         let myDropzone = this;
-                        myDropzone.on('success', function(file, message) {
+                        myDropzone.on('success', function(file, response) {
                             var a = document.createElement('a');
-                            a.setAttribute('href',"/public/uploads/" + file);
-                            a.innerHTML = "<br>Download";
+                            a.setAttribute('href',"/uploads/" + file.name);
+                           //a.append('http://localhost:3000/public/uploads/'+file)
+                            a.innerHTML = "<br>download";
                             file.previewTemplate.appendChild(a);
+                            //file.previewTemplate.appendChild(document.createTextNode(file.file));
+                            //console.log(file, response)
                         })
                     }
                 }
-        })
+
     </script>
 </body>
 </html>
