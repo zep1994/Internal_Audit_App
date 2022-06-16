@@ -53,7 +53,7 @@ app.post('/public/uploads', upload.single('file'), async (req, res, next) => {
    
 })
 
-app.get('/public/uploads/:filename',(req,res) => {
+app.get('/uploads/:filename',(req,res) => {
     res.sendFile(__dirname,"/public/uploads/"+req.query.filename);
 })
 
