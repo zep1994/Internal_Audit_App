@@ -12,6 +12,7 @@ ADExportForEC_Severn = 'C:\\Users\\tmatlock\\Documents\\SystemAccessAudit\\ADExp
 #import the report
 ADExport_ML = 'C:\\Users\\tmatlock\\Documents\\SystemAccessAudit\\UsersAndAddresses_ML.csv'
 
+test = 'Test.xlsx'
 
 #Read Excel Report
 df = pd.read_excel(ChangeReport)
@@ -24,6 +25,7 @@ Severn = pd.read_csv(ADExportForEC_Severn)
 #Read CSV Report
 Mirror_Lake = pd.read_csv(ADExport_ML)
 
+Test = pd.read_excel(test)
 
 #Print Excel Report To Screen
 # print(df)
@@ -38,6 +40,7 @@ crafcoAD = crafco.to_records()
 HattiesburgAD = Hattiesburg.to_records()
 SevernAD = Severn.to_records()
 Mirror_LakeAD = Mirror_Lake.to_records()
+test2 = Test.to_records()
 
 #Store New Hires Employees
 newHires = []
@@ -52,16 +55,19 @@ for x in report:
 
 Ad_Users = []
 
-for x in crafcoAD:
-    Ad_Users.append(x)
+# for x in crafcoAD:
+#     Ad_Users.append(x)
 
-for x in HattiesburgAD:
-    Ad_Users.append(x)
+# for x in HattiesburgAD:
+#     Ad_Users.append(x)
 
-for x in SevernAD:
-    Ad_Users.append(x)
+# for x in SevernAD:
+#     Ad_Users.append(x)
 
-for x in Mirror_LakeAD:
+# for x in Mirror_LakeAD:
+#     Ad_Users.append(x)
+
+for x in test2:
     Ad_Users.append(x)
 
 Active_Employees = []
