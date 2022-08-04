@@ -58,12 +58,11 @@
     <script>
         $(document).ready(function() {
             var header_counter = 2
-            var counter = 2
             $('#header_button').on('click', function() {
                 $('#header_section').append('<div id="header_section'+header_counter+'" class="header_section'+header_counter+'">\
                         Section Header Field <br>\
                         <div class="section_area">\
-                            Section Area Field   <button id="section_area_adder" class="section_area_header">+</button> <br>\
+                            Section Area Field   <button id="section_area_adder1" class="section_area_header1">+</button> <br>\
                         </div>\
                     </div>\
                     <hr>\
@@ -71,28 +70,30 @@
                 header_counter++
             })
 
-            $('#section_area_adder').on('click', '.section_area_header', function() {
-                var id = $(this).attr('id')
-                console.log(id)
-                var id_num = id.slice(-1)
-                console.log(id_num)
-                $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
-                counter++
-            })
-
             $(document).on('click', '[id^=section_area_adder]', function() {
+                var counter = 2
                 var id = $(this).attr('id')
                 console.log(id)
                 var id_num = id.slice(-1)
                 console.log(id_num)
-                $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+                $(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
                 counter++
             })
         })
     </script>
 </body>
 </html>
+<!-- 
 
+$('#section_area_adder1').on('click', '.section_area_header', function() {
+    var counter = 2
+    var id = $(this).attr('id')
+    console.log(id)
+    var id_num = id.slice(-1)
+    console.log(id_num)
+    $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+    counter++
+}) -->
 
 <!-- $(document).ready(function() {
     $.ajax({
