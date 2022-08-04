@@ -15,14 +15,10 @@
 </div>
 <!-- Header Section  -->
 <div id="header_section" class="header_section">
-    Section Header Field <br>
-    <!-- Section Area -->
-    <div id="section_area" class="section_area">
-        Section Area Field    <button id="section_area_adder" class="section_area_adder">+</button>
-        <div class="section_list"></div>
-    </div>
+    <span class="header_section_list">
+
+    </span>
 </div>
-<hr>
 
 
 <form id="upload-widget" method="post" action="/public/uploads" class="dropzone" enctype="multipart/form-data">
@@ -61,19 +57,36 @@
 
     <script>
         $(document).ready(function() {
+            var header_counter = 2
+            var counter = 2
             $('#header_button').on('click', function() {
-                $('#header_section').append('<div id="header_section" class="header_section">\
+                $('#header_section').append('<div id="header_section'+header_counter+'" class="header_section'+header_counter+'">\
                         Section Header Field <br>\
                         <div class="section_area">\
-                            Section Area Field    <button class="section_area_adder">+</button>\
+                            Section Area Field   <button id="section_area_adder" class="section_area_header">+</button> <br>\
                         </div>\
                     </div>\
                     <hr>\
                 ')
+                header_counter++
             })
 
-            $(document).on('click', '.section_area_adder', function() {
-                $('.section_list').append('Section Area Field    <button id="section_area_adder" class="section_area_adder">+</button> <br>')
+            $('#section_area_adder').on('click', '.section_area_header', function() {
+                var id = $(this).attr('id')
+                console.log(id)
+                var id_num = id.slice(-1)
+                console.log(id_num)
+                $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+                counter++
+            })
+
+            $(document).on('click', '[id^=section_area_adder]', function() {
+                var id = $(this).attr('id')
+                console.log(id)
+                var id_num = id.slice(-1)
+                console.log(id_num)
+                $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+                counter++
             })
         })
     </script>
