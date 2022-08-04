@@ -17,8 +17,9 @@
 <div id="header_section" class="header_section">
     Section Header Field <br>
     <!-- Section Area -->
-    <div class="section_area">
-        Section Area Field    <button class="section_area_adder">+</button>
+    <div id="section_area" class="section_area">
+        Section Area Field    <button id="section_area_adder" class="section_area_adder">+</button>
+        <div class="section_list"></div>
     </div>
 </div>
 <hr>
@@ -36,7 +37,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script type="text/javascript">
-   
             Dropzone.options.uploadWidget = {
                 url: '/public/uploads',
                 acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
@@ -72,6 +72,9 @@
                 ')
             })
 
+            $(document).on('click', '.section_area_adder', function() {
+                $('.section_list').append('Section Area Field    <button id="section_area_adder" class="section_area_adder">+</button> <br>')
+            })
         })
     </script>
 </body>
