@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>File Upload Example</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>File Upload Example</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
-<div class="section-header">
-    Section Header Field    <button class="section-adder">+</button>
+
+<!-- Add Header Section -->
+<div id="header_adder" class="header_adder">
+    <button id="header_button" class="header_button">Add Section +</button>
 </div>
-<div class="section-area"></div>
-<br>
+<!-- Header Section  -->
+<div id="header_section" class="header_section">
+    Section Header Field <br>
+    <!-- Section Area -->
+    <div class="section_area">
+        Section Area Field    <button class="section_area_adder">+</button>
+    </div>
+</div>
+<hr>
+
 
 <form id="upload-widget" method="post" action="/public/uploads" class="dropzone" enctype="multipart/form-data">
     <div class="fallback">
@@ -51,9 +61,17 @@
 
     <script>
         $(document).ready(function() {
-            $('.section-adder').on('click', function() {
-                $('.section-area').append('<div class="section-header">  Section Header Field    <button class="section-adder">+</button>    </div>')
+            $('#header_button').on('click', function() {
+                $('#header_section').append('<div id="header_section" class="header_section">\
+                        Section Header Field <br>\
+                        <div class="section_area">\
+                            Section Area Field    <button class="section_area_adder">+</button>\
+                        </div>\
+                    </div>\
+                    <hr>\
+                ')
             })
+
         })
     </script>
 </body>
