@@ -8,6 +8,9 @@ const multer  = require('multer')
 
 //Create instance of express
 const app = express()
+const mongoConnect = require('./utils/mongodb')
+const mongoose = require('mongoose');
+
 const port = process.env.PORT || 3000 // Port 3000
 
 
@@ -57,11 +60,21 @@ app.get('/uploads/:filename',(req,res) => {
     res.sendFile(__dirname,"/public/uploads/"+req.query.filename);
 })
 
-
+// mongoConnect(client => {
+//     console.log(client)
+//     app.listen(3000)
+// })
 
 // LISTEN
-app.listen(port, () => {
-    console.log('Connected')
+mongoose.connect(
+    'mongodb+srv://tmatlock94:BSY500a!@internalaudit.vmbsfxd.mongodb.net/?retryWrites=true&w=majority'
+    )
+.then(res => {
+    app.listen(3000)
+    console.log("Connected")
+})
+.catch(err => {
+    console.log(err)
 })
 
 // var newPath = __dirname + "/uploads/"
