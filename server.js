@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs')
 
 const express = require('express')
+const bodyParser = require('body-parser')
 const { Dropzone } = require('dropzone')
 const multer  = require('multer')
 // const multer = multer({ dest: '/public/uploads' })
@@ -17,12 +18,16 @@ const port = process.env.PORT || 3000 // Port 3000
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
-//ROUTES
-const HomeRoutes = require('./routes/home')
 
 // Use Static Files to serve images and css
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public/')))
 app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')))
+
+
+//ROUTES
+const HomeRoutes = require('./routes/home')
+const LayoutRoutes = require('./routes/layout')
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -41,6 +46,7 @@ const upload = multer({
 
 // RENDER ROUTES
 app.use(HomeRoutes)
+app.use(LayoutRoutes)
 
 app.post('/public/uploads', upload.single('file'), async (req, res, next) => {
     try {

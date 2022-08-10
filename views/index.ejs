@@ -7,7 +7,12 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-</head>
+        <script>
+            const input = () => {
+                $(this).focus()
+            }
+        </script>
+    </head>
 
 <!-- <form action="/" method="post"> -->
     <!-- Add Header Section -->
@@ -21,6 +26,10 @@
 
         </span>
     </div>
+
+    <form action="/" method="post">
+        <input type="hidden" class="header_count" name="header_count" value="">
+    </form>
 <!-- </form> -->
 
 <form id="upload-widget" method="post" action="/public/uploads" class="dropzone" enctype="multipart/form-data">
@@ -59,19 +68,31 @@
 
     <script>
         $(document).ready(function() {
-            var header_counter = 1
+            var headers = 1
             var counter = 2
             $('#header_button').on('click', function() {
-                $('#header_section').append('<div id="header_section'+header_counter+'" class="header_section'+header_counter+'">\
-                        Section Header Field <br>\
+                $('#header_section').append('<div id="header_section'+headers+'" class="header_section'+headers+'">\
+                        <p class="header_text" onClick="input()"> Section Header Field <p>\
                         <div class="section_area">\
-                            Section Area Field   <button id="section_area_adder1" class="section_area_header1">+</button> <br>\
+                            <span class="section_field_area"> Section Area Field </span>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
+                            <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
                         </div>\
                     </div>\
                     <hr>\
                 ')
-                header_counter++
+                headers++
                 counter = 2
+                var header_count = $('input[class=header_count').val()
+                header_count = headers
+                console.log("headers:", header_count)
+                $.ajax({
+                    url: 'http://localhost:3000/',
+                    type: "POST",
+                    data: {header_count: header_count},
+                    success: function(res) {
+                        console.log(header_count)
+                    }
+                })
             })
 
             $(document).on('click', '[id^=section_area_adder]', function() {
@@ -82,6 +103,27 @@
                 $(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
                 counter++
             })
+
+            var $this
+            $(document).on('click', '[class^=header_text]', function() {
+                $this = $(this)
+                var value = $(this).val()
+                var input = $('<input />', {
+                    'type': 'text',
+                    'name': 'names',
+                    'class': 'header_text',
+                    'value': '',
+                    'placeholder': "Change Header"
+                })
+                $(this).replaceWith(input)
+                $('.header_text').focus().select()
+            })
+            $(document).on("blur change", "input", function () {
+                var value = $(this).val();
+                $this.text(value);
+                //input.replaceWith($this);
+            })
+
         })
     </script>
 </body>

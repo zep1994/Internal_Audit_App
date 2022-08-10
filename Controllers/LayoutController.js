@@ -20,3 +20,19 @@ exports.postAddLayout = (req, res, next) => {
             console.log(err)
         })
 }
+
+exports.postHeaderNumber = (req, res, next) => {
+    const headers = req.body.header_count
+    console.log(headers)
+    const layout = new Layout({
+        headers: headers
+    })
+    layout
+        .save()
+        .then(() => {
+            res.redirect('/')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
