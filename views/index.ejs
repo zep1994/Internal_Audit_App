@@ -107,7 +107,6 @@
             var $this
             $(document).on('click', '[class^=header_text]', function() {
                 $this = $(this)
-                var value = $(this).val()
                 var input = $('<input />', {
                     'type': 'text',
                     'name': 'names',
@@ -119,9 +118,9 @@
                 $('.header_text').focus().select()
             })
             $(document).on("blur change", "input", function () {
-                var value = $(this).val();
+                var value = $('input[class^=header_text]').val();
                 $this.text(value);
-                //input.replaceWith($this);
+                $(this).replaceWith(value);
             })
 
         })
