@@ -3,6 +3,7 @@ const router = express.Router()
 
 const LayoutController = require('../controllers/LayoutController')
 
-router.post('/', LayoutController.postHeaderNumber)
+router.get('/', LayoutController.getHeaderNames)
+router.post('/', LayoutController.postHeaderNames)
 
 module.exports = router

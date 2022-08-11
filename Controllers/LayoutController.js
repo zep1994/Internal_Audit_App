@@ -1,4 +1,32 @@
+const { ObjectID } = require('bson')
 const Layout = require('../models/Layout')
+
+
+exports.getHeaderNames = (req, res, next) => {
+    const id = ObjectID('62f550a5dfe58b22a82f85b8')
+    Layout.findById(id)
+        .then(items => {
+            console.log(items.header_names)
+            res.render('index.ejs', {
+                items: items.header_names,
+                path: '/'
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    // .then(layout => {
+    //     console.log(layout)
+    //     res.render('index', {
+    //         items: layout,
+    //         path: '/'
+    //     })
+    // })
+    // .catch(err => {
+    //     console.log(err)
+    // })
+
 
 exports.postAddLayout = (req, res, next) => {
     const headers = req.body.headers
@@ -21,7 +49,7 @@ exports.postAddLayout = (req, res, next) => {
         })
 }
 
-exports.postHeaderNumber = (req, res, next) => {
+exports.postHeaderNames = (req, res, next) => {
     const header_names = req.body.header_names
     console.log(header_names)
     const layout = new Layout({

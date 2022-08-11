@@ -26,7 +26,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')))
 
 
 //ROUTES
-const HomeRoutes = require('./routes/home')
+//const HomeRoutes = require('./routes/home')
 const LayoutRoutes = require('./routes/layout')
 
 const multerStorage = multer.diskStorage({
@@ -45,7 +45,7 @@ const upload = multer({
 
 
 // RENDER ROUTES
-app.use(HomeRoutes)
+//app.use(HomeRoutes)
 app.use(LayoutRoutes)
 
 app.post('/public/uploads', upload.single('file'), async (req, res, next) => {
