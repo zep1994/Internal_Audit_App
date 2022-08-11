@@ -22,10 +22,10 @@ exports.postAddLayout = (req, res, next) => {
 }
 
 exports.postHeaderNumber = (req, res, next) => {
-    const headers = req.body.header_count
-    console.log(headers)
+    const header_names = req.body.header_names
+    console.log(header_names)
     const layout = new Layout({
-        headers: headers
+        header_names: header_names
     })
     layout
         .save()
