@@ -24,10 +24,14 @@
         <span class="header_section_list">
             <% var items = items %>
             <% if (items.length > 0) { %>
+                <% var counter = 1 %>
+                <% var headers = 1 %>
                 <% for (let layoutName of items) { %>
-                    <div class="header header_adder header_section" id="header_adder">
+                    <div class="header header_adder header_section" id="header_adder<%=headers%>">
                         <header class="header header_name header_text" id="header_section_text"><%= layoutName %></header>
+                        Section Area Field    <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
                     </div>
+                    <% headers++ %>
                 <% } %>
             <% } %>
         </span>
@@ -84,7 +88,6 @@
             <% } %>
             console.log(header_names)
             var headers = 1
-            var counter = 1
             var index 
             $('#header_button').on('click', function() {
                 $('#header_section').append('<div id="header_section'+headers+'" class="header_section'+headers+'">\
@@ -105,8 +108,13 @@
             })
 
             $(document).on('click', '[id^=section_area_adder]', function() {
+                var head_id = $(this).parent().attr('id')
                 var id = $(this).attr('id')
                 var id_num = id.slice(-1)
+                var counter = head_id.size()
+                var head_id_num = head_id.slice(-1)
+                //var counter = $(head_id > '.section_area_adder').length
+                console.log(counter)
                 $(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
                 counter++
             })
@@ -133,9 +141,6 @@
                 if (value.length !== 0) {
                     $(this).replaceWith('<p class="header_text">'+value+'</p>')
                     header_names[index] = value
-                    console.log(header_names[index])
-                    console.log(value)
-                    console.log(header_names)
                 }
             })
 
