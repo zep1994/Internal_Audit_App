@@ -9,7 +9,7 @@ exports.getHeaderNames = (req, res, next) => {
             console.log(items.header_names)
             res.render('index.ejs', {
                 items: items.header_names,
-                path: '/'
+                path: '/opsaudits'
             })
         })
         .catch(err => {

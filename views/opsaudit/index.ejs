@@ -10,9 +10,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     </head>
 
-    <h1 class="layoutName">Index Page</h1>
+    <h1 class="layoutName">Ops Audit</h1>
     <div id="header_adder" class="header_adder">
-        <a href="/opsaudits">Ops Audits</a>
+        <a href="/add_audit"> Create Ops Audit</a>
+        <% if (audits.length > 0) { %>
+            <% for (let audit of audits) { %>
+                <div class="audit_name">
+                    <a href="/audit/<%= audit._id %>" class="btn"><%= audit.audit %></a>
+                </div>
+            <% } %>
+        <% } %>
     </div>
 <!-- <form action="/" method="post"> -->
     <!-- Add Header Section -->
