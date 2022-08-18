@@ -40,12 +40,15 @@ exports.getAudit = (req, res, next) => {
     const Id = req.params.auditId
     Audit.findById(Id)
         .then(audit => {
-            const items = Audit.find()
-            console.log(items)
-            res.render('opsaudit/show', {
-                audit: audit,
-                items: items,
-                path: '/opsaudit'
-            })
+            const layoutID = audit.layoutId
+            Layout.findById(layoutID)
+                .then(items => {
+                    console.log(items.header_names)
+                    res.render('opsaudit/show', {
+                        audit: audit,
+                        items: items.header_names,
+                        path: '/opsaudit'
+                    })
+                })            
         })
 }
