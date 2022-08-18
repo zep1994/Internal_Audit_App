@@ -43,12 +43,23 @@ exports.getAudit = (req, res, next) => {
             const layoutID = audit.layoutId
             Layout.findById(layoutID)
                 .then(items => {
-                    console.log(items.header_names)
-                    res.render('opsaudit/show', {
-                        audit: audit,
-                        items: items.header_names,
-                        path: '/opsaudit'
-                    })
-                })            
+                    if (items == null) {
+                        res.render('opsaudit/show', {
+                            items: 0,
+                            audit: audit,
+                            path: '/opsaudit'
+                        })
+                    } else {
+                        console.log(items.header_names)
+                        res.render('opsaudit/show', {
+                            audit: audit,
+                            items: items.header_names,
+                            path: '/opsaudit'
+                        })
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })           
         })
 }

@@ -8,6 +8,14 @@ const layoutSchema = new Schema({
     auditId: {
         type: Schema.Types.ObjectId,
         ref: 'Audit'
+    },
+    audit_steps: {
+        steps: [
+            {
+                stepId: { type: Schema.Types.ObjectId, ref: 'Steps'},
+                name: { type: String }
+            }
+        ]
     }
     //names: [String],
     // steps: [Number],
