@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <title>File Upload Example</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    </head>
+
+    <h1 class="layoutName"><%= audit.audit %></h1>
+    <div id="header_adder" class="header_adder">
+        <button id="header_button" class="header_button">Add Section +</button>
+    </div>
+<!-- <form action="/" method="post"> -->
+    <!-- Add Header Section -->
+
+
+
+    <!-- Header Section  -->
+    <div id="header_section" class="header_section">
+        <span class="header_section_list">
+            <% var items = items %>
+            <% if (items.length > 0) { %>
+                <% var counter = 1 %>
+                <% var headers = 1 %>
+                <% for (let layoutName of items) { %>
+                    <div class="header header_adder header_section" id="header_adder<%=headers%>">
+                        <header class="header header_name header_text" id="header_section_text"><%= layoutName %></header>
+                        Section Area Field    <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
+                    </div>
+                    <% headers++ %>
+                <% } %>
+            <% } %>
+        </span>
+    </div> 
+
+    <form action="/" method="post">
+        <input type="hidden" class="header_count" name="header_count" value="">
+    </form>
+<!-- </form> -->
+
+<form id="upload-widget" method="post" action="/public/uploads" class="dropzone" enctype="multipart/form-data">
+    <div class="fallback">
+        <input name="file" type="file" id="file" />
+    </div>
+</form>
+
+<div class="files"></div>
+
+<div class="save_button">
+    <button id="save">Save</button>
+</div>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script type="text/javascript">
+            Dropzone.options.uploadWidget = {
+                url: '/public/uploads',
+                acceptedFiles: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
+                dictDefaultMessage: 'Drag File To Upload',
+                addRemoveLinks: true,
+                    init: function() {
+                        let myDropzone = this;
+                        myDropzone.on('success', function(file, response) {
+                            var a = document.createElement('a');
+                            a.setAttribute('href',"/uploads/" + file.name);
+                            a.setAttribute('target', "_blank")
+                           //a.append('http://localhost:3000/public/uploads/'+file)
+                            a.innerHTML = "<br>download";
+                            file.previewTemplate.appendChild(a);
+                            //file.previewTemplate.appendChild(document.createTextNode(file.file));
+                            //console.log(file, response)
+                        })
+                    }
+                }
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var header_names = []
+            <% if (items.length > 0) { %>
+                <% for (let name of items) { %>
+                    header_names.push('<%=name%>')
+                <% } %>
+            <% } %>
+            console.log(header_names)
+            var headers = 1
+            var index 
+            $('#header_button').on('click', function() {
+                $('#header_section').append('<div id="header_section'+headers+'" class="header_section'+headers+'">\
+                        <p id="header_section_text'+headers+'" class="header_text"> Section Header Field '+headers+' <p>\
+                        <div class="section_area">\
+                            <span class="section_field_area"> Section Area Field </span>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
+                            <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
+                        </div>\
+                    </div>\
+                    <hr>\
+                ')                
+                header_names.push('Section Header Field '+headers+'')
+                headers++
+                counter = 2
+                console.log(header_names)
+                var header_count = $('input[class=header_count').val()
+                header_count = headers
+            })
+
+            $(document).on('click', '[id^=section_area_adder]', function() {
+                var head_id = $(this).parent().attr('id')
+                var id = $(this).attr('id')
+                var id_num = id.slice(-1)
+                var counter = head_id.size()
+                var head_id_num = head_id.slice(-1)
+                //var counter = $(head_id > '.section_area_adder').length
+                console.log(counter)
+                $(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+                counter++
+            })
+
+            var $this
+            $('[class^=header_section]').on('click', '.header_text', function() {
+                $this = $(this)
+                var value = $(this).text().trim()
+                index = $.inArray(value, header_names)
+                var input = $('<input />', {
+                    'type': 'text',
+                    'name': 'names',
+                    'class': 'header_text_input',
+                    'value': value,
+                    'placeholder': value
+                })
+                $(this).replaceWith(input)
+                $('.header_text_input').focus().select()
+            })
+
+            $(document).on("blur change", "input", function () {
+                var value = $('input[class^=header_text_input]').val()
+                $this.text(value);
+                if (value.length !== 0) {
+                    $(this).replaceWith('<p class="header_text">'+value+'</p>')
+                    header_names[index] = value
+                }
+            })
+
+            $('#save').on('click', function() {
+                $.ajax({
+                    url: 'http://localhost:3000/opsaudits/<%= audit._id %>',
+                    type: "POST",
+                    data: {header_names: header_names},
+                    success: function(res) {
+                        console.log(header_names)
+                    }
+                })
+            })
+
+        })
+    </script>
+</body>
+</html>
+<!-- 
+
+$('#section_area_adder1').on('click', '.section_area_header', function() {
+    var counter = 2
+    var id = $(this).attr('id')
+    console.log(id)
+    var id_num = id.slice(-1)
+    console.log(id_num)
+    $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+    counter++
+}) -->
+
+<!-- $(document).ready(function() {
+    $.ajax({
+        url: '/upload',
+        method: 'post',
+        data: { file: 'file'},
+        success: function(data) {
+            var a = document.createElement('a');
+            a.setAttribute('href',"/uploads/" + data.file);
+            a.innerHTML = "<br>download";
+            file.previewTemplate.appendChild(a);
+        }
+    })
+}) -->
+
+
+<!-- 
+$(".dropzone").on('change', function() {
+    $.ajax({
+        url: '/upload',
+        method: 'post',
+        dataType: 'json',
+        data: { 'file': 'file' },
+        success: function(response) {
+            console.log(file)
+        }
+    })
+}) -->
+
+<!-- <script>
+    let myDropzone = new Dropzone("div#myId", { url: "/target"});
+    Dropzone.options.myGreatDropzone = { // camelized version of the `id`
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2, // MB
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
+            }
+        };
+</script> -->
+
+
+<!-- this.on('thumbnail', function(file) {
+    if (file.accepted !== false) {
+        if (file.width < 640 || file.height < 480) {
+        file.rejectDimensions();
+        } else {
+        file.acceptDimensions();
+        }
+    }
+    });
+},
+accept: function(file, done) {
+    file.acceptDimensions = done;
+    file.rejectDimensions = function() {
+    done('The image must be at least 640 x 480px');
+    }; -->

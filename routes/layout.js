@@ -5,10 +5,14 @@ const LayoutController = require('../controllers/LayoutController')
 const OpsAuditController = require('../controllers/OpsAuditController')
 
 router.get('/', LayoutController.getHeaderNames)
-router.post('/', LayoutController.postHeaderNames)
+// router.post('/', LayoutController.postHeaderNames)
 
 router.get('/opsaudits', OpsAuditController.getOpsAudit)
 
+//Show Audit
+router.get('/opsaudits/:auditId', OpsAuditController.getAudit)
+//Post Audit
+router.post('/opsaudits/:auditId', LayoutController.postHeaderNames)
 //Create Audit
 router.get('/add_audit', OpsAuditController.getAddAudit)
 router.post('/add_audit', OpsAuditController.postAddAudit)

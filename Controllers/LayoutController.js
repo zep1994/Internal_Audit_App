@@ -1,4 +1,5 @@
 const { ObjectID } = require('bson')
+const Audit = require('../models/audit')
 const Layout = require('../models/Layout')
 
 
@@ -51,10 +52,19 @@ exports.postAddLayout = (req, res, next) => {
 
 exports.postHeaderNames = (req, res, next) => {
     const header_names = req.body.header_names
-    console.log(header_names)
+    const Id = req.params.auditId
     const layout = new Layout({
-        header_names: header_names
+        header_names: header_names,
+        auditId: Id
     })
+    Audit.findById(Id)
+        .then(audit => {
+            audit.layoutId = layout._id
+            return audit.save()
+        })
+        .catch(err => {
+            console.log(err)
+        })
     layout
         .save()
         .then(() => {

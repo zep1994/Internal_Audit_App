@@ -16,7 +16,7 @@
         <% if (audits.length > 0) { %>
             <% for (let audit of audits) { %>
                 <div class="audit_name">
-                    <a href="/audit/<%= audit._id %>" class="btn"><%= audit.audit %></a>
+                    <a href="/opsaudits/<%= audit._id %>" class="btn"><%= audit.audit %></a>
                 </div>
             <% } %>
         <% } %>

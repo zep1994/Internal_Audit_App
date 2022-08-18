@@ -1,4 +1,5 @@
 const Audit = require('../models/audit')
+const Layout = require('../models/Layout')
 
 exports.getOpsAudit = (req, res, next) => {
     Audit.find()
@@ -19,9 +20,9 @@ exports.getAddAudit = (req, res, next) => {
 
 exports.postAddAudit = (req, res, next) => {
     const audit_name = req.body.audit 
-    console.log(audit_name)
     const audit = new Audit({
-        audit: audit_name
+        audit: audit_name,
+        layoutId: null
     })
     audit
         .save()
@@ -35,3 +36,16 @@ exports.postAddAudit = (req, res, next) => {
 
 
 // SHOW
+exports.getAudit = (req, res, next) => {
+    const Id = req.params.auditId
+    Audit.findById(Id)
+        .then(audit => {
+            const items = Audit.find()
+            console.log(items)
+            res.render('opsaudit/show', {
+                audit: audit,
+                items: items,
+                path: '/opsaudit'
+            })
+        })
+}
