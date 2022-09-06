@@ -1,6 +1,7 @@
 const { ObjectID } = require('bson')
 const Audit = require('../models/audit')
 const Layout = require('../models/Layout')
+const Step = require('../models/audit_steps')
 
 
 exports.getHeaderNames = (req, res, next) => {
@@ -52,14 +53,22 @@ exports.postAddLayout = (req, res, next) => {
 
 exports.postHeaderNames = (req, res, next) => {
     const header_names = req.body.header_names
+    const field_name = req.body.field_name
     const Id = req.params.auditId
+    console.log(field_name)
+    const step = new Step({
+        audit_id: Id,
+        header: header_names,
+        name: field_name
+    })
     const layout = new Layout({
         header_names: header_names,
-        auditId: Id
+        auditId: Id,
+        audit_steps: step.audit_id
     })
     Audit.findById(Id)
         .then(audit => {
-            audit.layoutId = layout._id
+            audit.layoutId = layout._id 
             return audit.save()
         })
         .catch(err => {
@@ -68,9 +77,23 @@ exports.postHeaderNames = (req, res, next) => {
     layout
         .save()
         .then(() => {
-            res.redirect('/')
+            step
+                .save()
+                .then(() => {
+                    res.redirect('/')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         })
         .catch(err => {
             console.log(err)
         })
+    
 }
+
+//EDIT HEADERS
+exports.editHeaderNames = (req, res, next) => {
+
+}
+

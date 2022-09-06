@@ -1,0 +1,4 @@
+                        <div class="section_area">\
+                            <span class="section_field_area"> Section Area Field </span>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
+                            <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
+                        </div>

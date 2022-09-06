@@ -2,12 +2,13 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const stepsSchema = new Schema({
-    step_names: [String],
-    layoutId: {
+const stepSchema = new Schema({
+    audit_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Layout'
-    }
+        ref: 'Audit'
+    },
+    header: String,
+    name: [String],
 })
 
-module.exports = mongoose.model("Steps", stepsSchema)
+module.exports = mongoose.model("Step", stepSchema)

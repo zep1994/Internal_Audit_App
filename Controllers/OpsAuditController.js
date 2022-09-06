@@ -1,5 +1,6 @@
 const Audit = require('../models/audit')
 const Layout = require('../models/Layout')
+const Steps = require('../models/audit_steps')
 
 exports.getOpsAudit = (req, res, next) => {
     Audit.find()
@@ -47,15 +48,24 @@ exports.getAudit = (req, res, next) => {
                         res.render('opsaudit/show', {
                             items: 0,
                             audit: audit,
+                            steps: 0,
                             path: '/opsaudit'
                         })
                     } else {
-                        console.log(items.header_names)
-                        res.render('opsaudit/show', {
-                            audit: audit,
-                            items: items.header_names,
-                            path: '/opsaudit'
-                        })
+                        Steps.find()
+                            .then(steps => {
+                                steps.audit_id === Id
+                                console.log(steps)
+                                res.render('opsaudit/show', {
+                                    audit: audit,
+                                    steps: steps,
+                                    items: items.header_names,
+                                    path: '/opsaudit'
+                                })
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
                     }
                 })
                 .catch(err => {
@@ -63,3 +73,5 @@ exports.getAudit = (req, res, next) => {
                 })           
         })
 }
+
+
