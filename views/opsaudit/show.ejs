@@ -23,22 +23,14 @@
     <div id="header_section" class="header_section">
         <span class="header_section_list">
             <% var items = items %>
-            <% if (items.length > 0) { %>
+            <% if ((items) || (items.length > 0)) { %>
                 <% var counter = 1 %>
                 <% var headers = 1 %>
                 <% for (let layoutName of items) { %>
                     <div class="header header_adder header_section" id="header_adder<%=headers%>">
-                        <header class="header header_name header_text" id="header_section_text"><%= layoutName %></header>
-                        <% if (steps.length > 0) { %>
-                            <% for (let step of steps) { %>
-                                <% if (step.header === layoutName) { %>
-                                    <% for (let x of step.name) { %>
-                                        <span class="section_field_area section_text"><%= x %></span>   <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
-                                    <% } %>
-                                <% } %>
-                            <% } %>
-                        <% } %>
-
+                        <header class="header header_name header_text" id="header_section_text"><%= layoutName.header %></header>
+                        <header class="header header_name header_text" id="header_section_text"><%= layoutName.field %></header>
+                        <span class="section_field_area section_text"></span>   <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
                     </div>
                     <% headers++ %>
                 <% } %>

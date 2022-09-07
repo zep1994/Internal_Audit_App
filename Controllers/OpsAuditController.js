@@ -44,6 +44,7 @@ exports.getAudit = (req, res, next) => {
             const layoutID = audit.layoutId
             Layout.findById(layoutID)
                 .then(items => {
+                    console.log(items)
                     if (items == null) {
                         res.render('opsaudit/show', {
                             items: 0,
@@ -52,21 +53,27 @@ exports.getAudit = (req, res, next) => {
                             path: '/opsaudit'
                         })
                     } else {
-                        Steps.find()
-                            .then(steps => {
-                                steps.audit_id === Id
-                                console.log(steps)
-                                res.render('opsaudit/show', {
-                                    audit: audit,
-                                    steps: steps,
-                                    items: items.header_names,
-                                    path: '/opsaudit'
-                                })
-                            })
-                            .catch(err => {
-                                console.log(err)
-                            })
+                        res.render('opsaudit/show', {
+                            audit: audit,
+                            items: items.headers
+                        })
                     }
+                    // } else {
+                    //     Steps.find()
+                    //         .then(steps => {
+                    //             steps.audit_id === Id
+                    //             console.log(steps)
+                    //             res.render('opsaudit/show', {
+                    //                 audit: audit,
+                    //                 steps: steps,
+                    //                 items: items.header_names,
+                    //                 path: '/opsaudit'
+                    //             })
+                    //         })
+                    //         .catch(err => {
+                    //             console.log(err)
+                    //         })
+                    // }
                 })
                 .catch(err => {
                     console.log(err)

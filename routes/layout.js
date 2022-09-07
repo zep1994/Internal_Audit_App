@@ -13,7 +13,7 @@ router.get('/opsaudits', OpsAuditController.getOpsAudit)
 //Show Audit
 router.get('/opsaudits/:auditId', OpsAuditController.getAudit)
 //Post Audit
-router.post('/opsaudits/:auditId', LayoutController.postHeaderNames)
+router.post('/opsaudits/:auditId', LayoutController.postLayout)
 router.post('/opsaudits/edit/:auditId', LayoutController.editHeaderNames)
 
 //Create Audit

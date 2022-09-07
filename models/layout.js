@@ -3,12 +3,19 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const layoutSchema = new Schema({
-    header_names: [String],
+    headers: [{
+        header: String, 
+        field: String
+    }],
+    //header_names: [String],
     auditId: {
         type: Schema.Types.ObjectId,
         ref: 'Audit'
     },
-    steps: String
+    // steps: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Audit_Step'
+    // }
     //stepId: [{ type: Schema.Types.ObjectId, ref: 'Steps'}]
 })
 

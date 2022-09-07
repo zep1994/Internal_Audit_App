@@ -51,7 +51,7 @@ exports.postAddLayout = (req, res, next) => {
         })
 }
 
-exports.postHeaderNames = (req, res, next) => {
+exports.postLayout = (req, res, next) => {
     const header_names = req.body.header_names
     const field_name = req.body.field_name
     const Id = req.params.auditId
@@ -62,9 +62,13 @@ exports.postHeaderNames = (req, res, next) => {
         name: field_name
     })
     const layout = new Layout({
-        header_names: header_names,
+        //header_names: header_names,
+        headers: {
+            header: "Header",
+            field: "Field"
+        },
         auditId: Id,
-        audit_steps: step.audit_id
+        //audit_steps: step.audit_id
     })
     Audit.findById(Id)
         .then(audit => {
@@ -96,4 +100,3 @@ exports.postHeaderNames = (req, res, next) => {
 exports.editHeaderNames = (req, res, next) => {
 
 }
-
