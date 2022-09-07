@@ -5,7 +5,7 @@ const Steps = require('../models/audit_steps')
 exports.getOpsAudit = (req, res, next) => {
     Audit.find()
     .then(audits => {
-        console.log(audits)
+        //console.log(audits)
         res.render('opsaudit/index', {
             path: '/opsaudits',
             audits: audits
@@ -44,7 +44,7 @@ exports.getAudit = (req, res, next) => {
             const layoutID = audit.layoutId
             Layout.findById(layoutID)
                 .then(items => {
-                    console.log(items)
+                    //console.log(items)
                     if (items == null) {
                         res.render('opsaudit/show', {
                             items: 0,

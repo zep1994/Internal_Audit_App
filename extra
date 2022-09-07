@@ -13,3 +13,119 @@
                                 <% } %>
                             <% } %>
                         <% } %> -->
+
+
+
+                        
+            // $(document).on("blur change", "input", function () {
+                //     var value = $('input[class^=section_text_input]').val()
+                //     $this.text(value);
+                //     if (value.length !== 0) {
+                //         $(this).replaceWith('<p class="section_text">'+value+'</p>')
+                //         header_names[index] = value
+                //     }
+                // })
+    
+    
+                // $(document).on('click', '[id^=section_area_adder]', function() {
+                //     var head_id = $(this).parent().attr('id')
+                //     var id = $(this).attr('id')
+                //     var id_num = id.slice(-1)
+                //     // var counter = head_id.size()
+                //     // var head_id_num = head_id.slice(-1)
+                //     //var counter = $(head_id > '.section_area_adder').length
+                //     console.log(head_id)
+                //     //$(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+                //     //counter++
+                // })
+
+
+
+                // function Audit_Steps(audit_id, header, name) {
+                    //         this.audit_id = audit_id
+                    //         this.header = header
+                    //         this.name = name
+                    //     }
+        
+        
+                    // <% if (items.length > 0) { %>
+                    //     <% for (let name of items) { %>
+                    //         header_names.push('<%=name%>')
+                    //     <% } %>
+                    // <% } %>
+
+
+
+
+
+
+                    <!-- 
+
+$('#section_area_adder1').on('click', '.section_area_header', function() {
+    var counter = 2
+    var id = $(this).attr('id')
+    console.log(id)
+    var id_num = id.slice(-1)
+    console.log(id_num)
+    $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
+    counter++
+}) -->
+
+<!-- $(document).ready(function() {
+    $.ajax({
+        url: '/upload',
+        method: 'post',
+        data: { file: 'file'},
+        success: function(data) {
+            var a = document.createElement('a');
+            a.setAttribute('href',"/uploads/" + data.file);
+            a.innerHTML = "<br>download";
+            file.previewTemplate.appendChild(a);
+        }
+    })
+}) -->
+
+
+<!-- 
+$(".dropzone").on('change', function() {
+    $.ajax({
+        url: '/upload',
+        method: 'post',
+        dataType: 'json',
+        data: { 'file': 'file' },
+        success: function(response) {
+            console.log(file)
+        }
+    })
+}) -->
+
+<!-- <script>
+    let myDropzone = new Dropzone("div#myId", { url: "/target"});
+    Dropzone.options.myGreatDropzone = { // camelized version of the `id`
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2, // MB
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
+            }
+        };
+</script> -->
+
+
+<!-- this.on('thumbnail', function(file) {
+    if (file.accepted !== false) {
+        if (file.width < 640 || file.height < 480) {
+        file.rejectDimensions();
+        } else {
+        file.acceptDimensions();
+        }
+    }
+    });
+},
+accept: function(file, done) {
+    file.acceptDimensions = done;
+    file.rejectDimensions = function() {
+    done('The image must be at least 640 x 480px');
+    }; -->

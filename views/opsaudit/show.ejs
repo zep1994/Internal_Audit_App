@@ -78,44 +78,33 @@
                         })
                     }
                 }
-
     </script>
-
     <script>
         $(document).ready(function() {
             var headers = 1
             var index 
             var header_names = []
+            var header_name
             var field_name
+            var field_names = []
             var obj = {}
-            function Audit_Steps(audit_id, header, name) {
-                    this.audit_id = audit_id
-                    this.header = header
-                    this.name = name
-                }
 
-
-            <% if (items.length > 0) { %>
-                <% for (let name of items) { %>
-                    header_names.push('<%=name%>')
-                <% } %>
-            <% } %>
-            console.log("")
             $('#header_button').on('click', function() {
                 $('#header_section').append('<div id="header_section'+headers+'" class="header_section'+headers+'">\
                         <p id="header_section_text'+headers+'" class="header_text"> Section Header Field '+headers+' <p>\
                         <div class="section_area">\
-                            <p class="section_field_area'+headers+'">Section Area Field</p>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
+                            <p class="section_text section_field_area'+headers+'">Section Area Field</p>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
                             <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
                         </div>\
                     </div>\
                     <hr>\
                 ')                
-                header_names.push('Section Header Field '+headers+'')
-                
                 counter = 2
-                const head_name = 'Section Header Field '+headers+''
-                const field_name = 'Section Field Area'+headers+''
+                header_name = 'Section Header Field '+headers+''
+                field_name = 'Section Field Area'+headers+''
+                header_names.push(header_name)
+                field_names.push(field_name)
+                console.log(header_names, field_name)
                 const audit_id = '<%= audit._id %>'
                 const field_text = $('.section_field_area:first').text()
                 var header_count = $('input[class=header_count').val()
@@ -124,20 +113,22 @@
                 //const mySteps = new Audit_Steps(audit_id, head_name, field_text)
             })
 
-            $(document).on('click', '[class^=section_area]', function() {
-                var head_id = $(this).parent().attr('id')
-                var text = $(this).parent().find('[class^=section_field_area]').text()
-                const audit_id = '<%= audit._id %>'
-                const mySteps = new Audit_Steps(audit_id, head_id, text)
-            })
+            // $(document).on('click', '[class^=section_area]', function() {
+            //     console.log("Clicked")
+            //     var head_id = $(this).parent().attr('id')
+            //     var text = $(this).parent().find('[class^=section_field_area]').text()
+            //     const audit_id = '<%= audit._id %>'
+            //     //const mySteps = new Audit_Steps(audit_id, head_id, text)
+            // })
 
+            //SECTION 
             var $this
             $('[class^=header_section]').on('click', '.section_text', function() {
                 $this = $(this)
                 var value = $(this).text().trim()
-                console.log(value)
-                index = $.inArray(value, mySteps.head_id)
-                console.log(mySteps.head_id)
+                //console.log(value)
+                index = $.inArray(value, field_names)
+                //console.log(mySteps.head_id)
                 var input = $('<input />', {
                     'type': 'text',
                     'name': 'name',
@@ -149,28 +140,18 @@
                 $('.section_text_input').focus().select()
             })
 
-            // $(document).on("blur change", "input", function () {
-            //     var value = $('input[class^=section_text_input]').val()
-            //     $this.text(value);
-            //     if (value.length !== 0) {
-            //         $(this).replaceWith('<p class="section_text">'+value+'</p>')
-            //         header_names[index] = value
-            //     }
-            // })
+            $(document).on("blur change", "input", function () {
+                var value = $('input[class^=section_text_input]').val()
+                console.log(value)
+                $this.text(value);
+                if (value.length !== 0) {
+                    $(this).replaceWith('<p class="header_text">'+value+'</p>')
+                    field_names[index] = value
+                    field_name = value
+                    console.log(field_name)
+                }})
 
-
-            // $(document).on('click', '[id^=section_area_adder]', function() {
-            //     var head_id = $(this).parent().attr('id')
-            //     var id = $(this).attr('id')
-            //     var id_num = id.slice(-1)
-            //     // var counter = head_id.size()
-            //     // var head_id_num = head_id.slice(-1)
-            //     //var counter = $(head_id > '.section_area_adder').length
-            //     console.log(head_id)
-            //     //$(this).parent().append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
-            //     //counter++
-            // })
-
+            //HEADER
             var $this
             $('[class^=header_section]').on('click', '.header_text', function() {
                 $this = $(this)
@@ -187,12 +168,14 @@
                 $('.header_text_input').focus().select()
             })
 
-            $(document).on("blur change", "input", function () {
+            $('[class^=header_section]').on("blur change", "input", function () {
                 var value = $('input[class^=header_text_input]').val()
                 $this.text(value);
                 if (value.length !== 0) {
                     $(this).replaceWith('<p class="header_text">'+value+'</p>')
                     header_names[index] = value
+                    header_name = value
+                    console.log(header_name)
                 }
                 $.ajax({
                     url: 'http://localhost:3000/opsaudits/edit/<%= audit._id %>',
@@ -204,91 +187,20 @@
                 })
             })
 
-            $('#save').on('click', function() {
-                $.ajax({
-                    url: 'http://localhost:3000/opsaudits/<%= audit._id %>',
-                    type: "POST",
-                    data: {
-                        header_names: header_names,
-                        field_name: field_name
-                    },
-                    success: function(res) {
-                        console.log(header_names, field_names)
-                    }
+                $(document).on('click', '#save', function(){
+                    $.ajax({
+                        url: 'http://localhost:3000/opsaudits/<%= audit._id %>',
+                        type: "POST",
+                        data: {
+                            header: header_name,
+                            field: field_name
+                        },
+                        success: function(res) {
+                            console.log(header_name, field_name)
+                        }
                 })
             })
-
         })
     </script>
 </body>
 </html>
-<!-- 
-
-$('#section_area_adder1').on('click', '.section_area_header', function() {
-    var counter = 2
-    var id = $(this).attr('id')
-    console.log(id)
-    var id_num = id.slice(-1)
-    console.log(id_num)
-    $('.section_area').append('Section Area Field    <button id="section_area_adder'+counter+'" class="section_area_adder">+</button> <br>')
-    counter++
-}) -->
-
-<!-- $(document).ready(function() {
-    $.ajax({
-        url: '/upload',
-        method: 'post',
-        data: { file: 'file'},
-        success: function(data) {
-            var a = document.createElement('a');
-            a.setAttribute('href',"/uploads/" + data.file);
-            a.innerHTML = "<br>download";
-            file.previewTemplate.appendChild(a);
-        }
-    })
-}) -->
-
-
-<!-- 
-$(".dropzone").on('change', function() {
-    $.ajax({
-        url: '/upload',
-        method: 'post',
-        dataType: 'json',
-        data: { 'file': 'file' },
-        success: function(response) {
-            console.log(file)
-        }
-    })
-}) -->
-
-<!-- <script>
-    let myDropzone = new Dropzone("div#myId", { url: "/target"});
-    Dropzone.options.myGreatDropzone = { // camelized version of the `id`
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2, // MB
-        accept: function(file, done) {
-            if (file.name == "justinbieber.jpg") {
-                done("Naha, you don't.");
-            }
-            else { done(); }
-            }
-        };
-</script> -->
-
-
-<!-- this.on('thumbnail', function(file) {
-    if (file.accepted !== false) {
-        if (file.width < 640 || file.height < 480) {
-        file.rejectDimensions();
-        } else {
-        file.acceptDimensions();
-        }
-    }
-    });
-},
-accept: function(file, done) {
-    file.acceptDimensions = done;
-    file.rejectDimensions = function() {
-    done('The image must be at least 640 x 480px');
-    }; -->

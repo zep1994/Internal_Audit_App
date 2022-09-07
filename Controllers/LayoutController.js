@@ -30,32 +30,32 @@ exports.getHeaderNames = (req, res, next) => {
     // })
 
 
-exports.postAddLayout = (req, res, next) => {
-    const headers = req.body.headers
-    const names = req.body.names
-    const steps = req.body.steps 
-    const step_names = req.body.step_names
-    const layout = new Layout({
-        headers: headers,
-        names: names,
-        steps: steps,
-        step_names: step_names
-    })
-    layout
-        .save()
-        .then(() => {
-            res.redirect('/')
-        })
-        .catch(err => {
-            console.log(err)
-        })
-}
+// exports.postAddLayout = (req, res, next) => {
+//     const headers = req.body.headers
+//     const names = req.body.names
+//     const steps = req.body.steps 
+//     const step_names = req.body.step_names
+//     const layout = new Layout({
+//         headers: headers,
+//         names: names,
+//         steps: steps,
+//         step_names: step_names
+//     })
+//     layout
+//         .save()
+//         .then(() => {
+//             res.redirect('/')
+//         })
+//         .catch(err => {
+//             console.log(err)
+//         })
+// }
 
 exports.postLayout = (req, res, next) => {
-    const header_names = req.body.header_names
-    const field_name = req.body.field_name
+    const header_names = req.body.header
+    const field_name = req.body.field
     const Id = req.params.auditId
-    console.log(field_name)
+    //console.log(field_name)
     const step = new Step({
         audit_id: Id,
         header: header_names,
@@ -64,8 +64,8 @@ exports.postLayout = (req, res, next) => {
     const layout = new Layout({
         //header_names: header_names,
         headers: {
-            header: "Header",
-            field: "Field"
+            header: header_names,
+            field: field_name
         },
         auditId: Id,
         //audit_steps: step.audit_id

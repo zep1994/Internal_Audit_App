@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const layoutSchema = new Schema({
     headers: [{
         header: String, 
-        field: String
+        field: [String]
     }],
     //header_names: [String],
     auditId: {
