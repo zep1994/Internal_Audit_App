@@ -4,9 +4,9 @@ const Schema = mongoose.Schema
 
 const auditSchema = new Schema({
     audit: [String],
-    layoutId: {
+    workStepId: {
         type: Schema.Types.ObjectId,
-        ref: 'Layout'
+        ref: 'WorkStep'
     }
 })
 

@@ -23,17 +23,15 @@
     <div id="header_section" class="header_section">
         <span class="header_section_list">
             <% var items = items %>
-            <% if ((items) || (items.length > 0)) { %>
+            <% if (items) { %>
                 <% var counter = 1 %>
                 <% var headers = 1 %>
-                <% for (let layoutName of items) { %>
-                    <div class="header header_adder header_section" id="header_adder<%=headers%>">
-                        <header class="header header_name header_text" id="header_section_text"><%= layoutName.header %></header>
-                        <header class="header header_name header_text" id="header_section_text"><%= layoutName.field %></header>
-                        <span class="section_field_area section_text"></span>   <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
-                    </div>
-                    <% headers++ %>
-                <% } %>
+                <div class="header header_adder header_section" id="header_adder<%=headers%>">
+                    <header class="header header_name header_text" id="header_section_text"><%= items %></header>
+                    <p class="section_field_area section_text"></p>   <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
+                    <div class="section_area"></div>
+                </div>
+                <% headers++ %>
             <% } %>
         </span>
     </div> 
@@ -82,6 +80,7 @@
     <script>
         $(document).ready(function() {
             var headers = 1
+            var fields = 2
             var index 
             var header_names = []
             var header_name
@@ -89,16 +88,14 @@
             var field_names = []
             var obj = {}
 
+            // Header Section for Creation of headers
             $('#header_button').on('click', function() {
                 $('#header_section').append('<div id="header_section'+headers+'" class="header_section'+headers+'">\
-                        <p id="header_section_text'+headers+'" class="header_text"> Section Header Field '+headers+' <p>\
-                        <div class="section_area">\
-                            <p class="section_text section_field_area'+headers+'">Section Area Field</p>  <button id="section_area_adder1" class="section_area_header_class1">+</button> <br>\
-                            <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
-                        </div>\
+                        <p id="header_section_text'+headers+'" class="header_text"> Section Header Field '+headers+' </p>\
+                        <button id="section_area_adder'+fields+'" class="section_area_adder orginal_">+</button>\
                     </div>\
                     <hr>\
-                ')                
+                ')    
                 counter = 2
                 header_name = 'Section Header Field '+headers+''
                 field_name = 'Section Field Area'+headers+''
@@ -110,46 +107,19 @@
                 var header_count = $('input[class=header_count').val()
                 header_count = headers
                 headers++
+                $.ajax({
+                        url: 'http://localhost:3000/opsaudits/<%= audit._id %>',
+                        type: "POST",
+                        data: {
+                            header: header_name
+                            },
+                        success: function(res) {
+                            console.log(header_name)
+                        }
+                })
                 //const mySteps = new Audit_Steps(audit_id, head_name, field_text)
             })
 
-            // $(document).on('click', '[class^=section_area]', function() {
-            //     console.log("Clicked")
-            //     var head_id = $(this).parent().attr('id')
-            //     var text = $(this).parent().find('[class^=section_field_area]').text()
-            //     const audit_id = '<%= audit._id %>'
-            //     //const mySteps = new Audit_Steps(audit_id, head_id, text)
-            // })
-
-            //SECTION 
-            var $this
-            $('[class^=header_section]').on('click', '.section_text', function() {
-                $this = $(this)
-                var value = $(this).text().trim()
-                //console.log(value)
-                index = $.inArray(value, field_names)
-                //console.log(mySteps.head_id)
-                var input = $('<input />', {
-                    'type': 'text',
-                    'name': 'name',
-                    'class': 'section_text_input',
-                    'value': value,
-                    'placeholder': value
-                })
-                $(this).replaceWith(input)
-                $('.section_text_input').focus().select()
-            })
-
-            $(document).on("blur change", "input", function () {
-                var value = $('input[class^=section_text_input]').val()
-                console.log(value)
-                $this.text(value);
-                if (value.length !== 0) {
-                    $(this).replaceWith('<p class="header_text">'+value+'</p>')
-                    field_names[index] = value
-                    field_name = value
-                    console.log(field_name)
-                }})
 
             //HEADER
             var $this
@@ -168,6 +138,7 @@
                 $('.header_text_input').focus().select()
             })
 
+            // Header Text Input Change
             $('[class^=header_section]').on("blur change", "input", function () {
                 var value = $('input[class^=header_text_input]').val()
                 $this.text(value);
@@ -187,16 +158,77 @@
                 })
             })
 
+            //Section Area
+            $('.section_area_adder').on('click', function() {
+                console.log("test")
+            })
+
+            //Section Area 
+            $('[class^=section_area').on('click', function() {
+                field_name = 'Section Field Area'
+                field_names.push(field_name)
+                $(this).prev().append(' <div class="section_area">\
+                                                <p class="section_text section_field_area'+fields+'">Section Area Field</p>  \
+                                                <input type="hidden" id="header_section'+fields+'" name="name" value='+fields+'>  <hr> \
+                                                </div> ')       
+                                                field_name = 'Section Field Area'
+                                                field_names.push(field_name)
+                                                console.log(field_names)
+                                                fields++
+                                                $.ajax({
+                                                        url: 'http://localhost:3000/opsaudit/steps/<%= audit._id %>',
+                                                        type: "POST",
+                                                        data: {
+                                                            steps: field_names
+                                                            },
+                                                        success: function(res) {
+                                                            console.log(header_name)
+                                                        }
+                                                })
+            })
+
+            //Section Input Change 
+            var $this
+            $('[class^=section_field_area]').on('click', '.section_text', function() {
+                $this = $(this)
+                var value = $(this).text().trim()
+                //console.log(value)
+                index = $.inArray(value, field_names)
+                //console.log(mySteps.head_id)
+                var input = $('<input />', {
+                    'type': 'text',
+                    'name': 'name',
+                    'class': 'section_text_input',
+                    'value': value,
+                    'placeholder': value
+                })
+                $(this).replaceWith(input)
+                $('.section_text_input').focus().select()
+            })
+
+
+            // Section Text Input Change
+                $(document).on("blur change", "input", function () {
+                    var value = $('input[class^=section_text_input]').val()
+                    $this.text(value);
+                    if (value.length !== 0) {
+                        $(this).replaceWith('<p class="section_text">'+value+'</p>')
+                    field_names[index] = value
+                    field_name = value
+                    console.log(value)
+                }})
+
+            // SAVE 
                 $(document).on('click', '#save', function(){
                     $.ajax({
                         url: 'http://localhost:3000/opsaudits/<%= audit._id %>',
                         type: "POST",
                         data: {
                             header: header_name,
-                            field: field_name
+                            field: field_names
                         },
                         success: function(res) {
-                            console.log(header_name, field_name)
+                            console.log(header_name, field_names)
                         }
                 })
             })

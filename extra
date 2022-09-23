@@ -129,3 +129,33 @@ accept: function(file, done) {
     file.rejectDimensions = function() {
     done('The image must be at least 640 x 480px');
     }; -->
+
+
+    // $(document).on('click', '[class^=section_area]', function() {
+        //     console.log("Clicked")
+        //     var head_id = $(this).parent().attr('id')
+        //     var text = $(this).parent().find('[class^=section_field_area]').text()
+        //     const audit_id = '<%= audit._id %>'
+        //     //const mySteps = new Audit_Steps(audit_id, head_id, text)
+        // })
+
+
+
+
+
+        In the show pages
+        <div class="section_area">\
+            <p class="section_text section_field_area'+headers+'">'+headers+'Section Area Field 1</p>  <button id="section_area_adder'+headers+'" class="section_area_adder">+</button> <br>\
+            <input type="hidden" id="header_section'+headers+'" name="headers" value='+headers+'\
+        </div>\
+
+
+        <!-- <% for (let layoutName of items) { %> -->
+                            <!-- <% } %> -->
+                    <!-- <header class="header header_name header_text" id="header_section_text"><%= layoutName.steps %></header> -->
+
+
+
+
+
+                    <!-- <button id="section_area_adder'+fields+'" class="section_area_adder">+</button> <br>\ -->

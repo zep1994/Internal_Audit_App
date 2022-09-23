@@ -2,6 +2,7 @@ const { ObjectID } = require('bson')
 const Audit = require('../models/audit')
 const Layout = require('../models/Layout')
 const Step = require('../models/audit_steps')
+const WorkStep = require('../models/work_steps')
 
 
 exports.getHeaderNames = (req, res, next) => {
@@ -94,6 +95,32 @@ exports.postLayout = (req, res, next) => {
             console.log(err)
         })
     
+}
+
+//POST WORKSTEP
+exports.postWorkStep = (req, res, next) => {
+    const header_name = req.body.header
+    const Id = req.params.auditId
+    const workStep = new WorkStep({
+        name: header_name,
+        auditId: Id
+    })
+    Audit.findById(Id)
+        .then(audit => {
+            audit.workStepId = workStep._id 
+            return audit.save()
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    workStep
+    .save()
+    .then(() => {
+        res.redirect('/')
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
 
 //EDIT HEADERS

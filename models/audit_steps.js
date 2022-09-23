@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const auditstepSchema = new Schema({
-    audit_id: {
+    workStep_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Audit'
+        ref: 'WorkStep'
     },
-    steps: [{ header: String, step: String }]
+    steps: [String]
 })
 
-module.exports = mongoose.model("Audit_Step", auditstepSchema)
+module.exports = mongoose.model("AuditStep", auditstepSchema)
