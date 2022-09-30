@@ -26,8 +26,11 @@
             <% if (items) { %>
                 <% var counter = 1 %>
                 <% var headers = 1 %>
+                <header class="header header_name header_text" id="header_section_text"><%= items %></header>
+                <!-- <% for (step of steps) { %>
+                    <p class="section_field_area section_text"><%= step %></p> <br>
+                <% } %> -->
                 <div class="header header_adder header_section" id="header_adder<%=headers%>">
-                    <header class="header header_name header_text" id="header_section_text"><%= items %></header>
                     <p class="section_field_area section_text"></p>   <button id="section_area_adder<%=counter%>" class="section_area_adder">+</button> <br>
                     <div class="section_area"></div>
                 </div>
@@ -156,11 +159,6 @@
                         console.log(header_names)
                     }
                 })
-            })
-
-            //Section Area
-            $('.section_area_adder').on('click', function() {
-                console.log("test")
             })
 
             //Section Area 

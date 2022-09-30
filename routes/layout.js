@@ -8,12 +8,14 @@ const AuditStepsController = require('../controllers/AuditStepsController')
 router.get('/', LayoutController.getHeaderNames)
 // router.post('/', LayoutController.postHeaderNames)
 
+// OpsAudit Index
 router.get('/opsaudits', OpsAuditController.getOpsAudit)
 
 //Show Audit
 router.get('/opsaudits/:auditId', OpsAuditController.getAudit)
+
 //Post Audit
-router.post('/opsaudits/:auditId', LayoutController.postWorkStep)
+router.post('/opsaudits/:auditId', OpsAuditController.postWorkStep)
 router.post('/opsaudits/edit/:auditId', LayoutController.editHeaderNames)
 
 //Create Audit

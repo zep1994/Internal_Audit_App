@@ -11,7 +11,7 @@ const workStepSchema = new Schema({
     },
     steps: {
         type: Schema.Types.ObjectId,
-        ref: 'Audit_Step'
+        ref: 'AuditStep'
     }
     //stepId: [{ type: Schema.Types.ObjectId, ref: 'Steps'}]
 })

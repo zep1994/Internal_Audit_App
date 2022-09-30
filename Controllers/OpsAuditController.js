@@ -36,6 +36,32 @@ exports.postAddAudit = (req, res, next) => {
         })
 }
 
+//POST WORKSTEP
+exports.postWorkStep = (req, res, next) => {
+    const header_name = req.body.header
+    const Id = req.params.auditId
+    const workStep = new WorkStep({
+        name: header_name,
+        auditId: Id
+    })
+    Audit.findById(Id)
+        .then(audit => {
+            audit.workStepId = workStep._id 
+            return audit.save()
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    workStep
+    .save()
+    .then(() => {
+        res.redirect('/')
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
 
 // SHOW
 exports.getAudit = (req, res, next) => {
@@ -66,7 +92,7 @@ exports.getAudit = (req, res, next) => {
                             res.render('opsaudit/show', {
                                 audit: audit,
                                 items: workstep.name,
-                                steps: steps
+                                steps: auditstep.steps
                             })
                         }})
                         .catch(err => {
@@ -107,26 +133,51 @@ exports.postAddSteps = (req, res, next) => {
     Audit.findById(Id)
         .then(audit => {
             const workStepId = audit.workStepId
-            const auditStep = new AuditStep({
-                workStep_id: workStepId,
-                steps: steps
-            })
-            WorkStep.findById(workStepId)
-                .then(step => {
-                    console.log(step)
-                    step.steps = auditStep._id
-                    return step.save()
+            if (!workStepId.steps) {
+                const auditStep = new AuditStep({
+                    workStep_id: workStepId,
+                    steps: steps
+                })
+                WorkStep.findById(workStepId)
+                    .then(step => {
+                        console.log(step)
+                        step.steps = auditStep._id
+                        return step.save()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                auditStep
+                .save()
+                .then(() => {
+                    res.redirect('/')
                 })
                 .catch(err => {
                     console.log(err)
                 })
-            auditStep
-            .save()
-            .then(() => {
-                res.redirect('/')
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            } else {
+                const auditStep = new AuditStep({
+                    workStep_id: workStepId,
+                    steps: steps
+                })
+                WorkStep.findById(workStepId)
+                    .then(step => {
+                        console.log(step)
+                        step.steps = auditStep._id
+                        return step.save()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                auditStep
+                .save()
+                .then(() => {
+                    res.redirect('/')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+            
         })
 }
