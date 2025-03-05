@@ -9,4 +9,4 @@
         }
     }
 
-module.export = config
+module.exports = config
