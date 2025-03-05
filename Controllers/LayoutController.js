@@ -22,26 +22,27 @@ const WorkStep = require('../models/work_steps')
 //     }
 
 
-//EDIT HEADERS
+exports.getHeaderNames = (req, res, next) => {
+    // Fetch the first layout document – adjust as needed if you have multiple layouts.
+    Layout.findOne()
+        .then(layout => {
+            const headerNames = layout ? layout.header_names : [];
+            console.log("Header Names: ", headerNames);
+            res.render('index', { 
+                items: headerNames, 
+                path: '/opsaudits' 
+            });
+        })
+        .catch(err => {
+            console.error("Error fetching layout:", err);
+            next(err);
+        });
+};
+
 exports.editHeaderNames = (req, res, next) => {
-
+    // Implement the edit functionality as needed
+    res.send('Edit header names functionality not implemented yet.');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
